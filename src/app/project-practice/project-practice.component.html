@@ -1,0 +1,141 @@
+<div class="container-fluid pt-3 mt-auto">
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="list-group sticky-top" id="list-tab" role="tablist ">
+        <a (click)="active='1'" class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" role="tab">Getting Started</a>
+        <a (click)="active='2'" class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" role="tab">Authentication & Authorization</a>
+        <!-- <a (click)="active='3'" class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" role="tab">fourth</a> -->
+        
+
+      </div>
+    </div>
+    <div class="col-sm-9">
+      <div *ngIf="active == '1'" class="card border-info">
+        <h4 class="card-header text-success">Getting Started</h4>
+        <div>
+          <div class="card-body text-info">
+            <div class="card mb-3">
+              <div class="card-header text-primary">
+                Creating a New Project With Firebase
+              </div>
+              <div class="card-body" [innerHtml]="createNewProject">
+              </div>
+            </div>
+          </div>
+          <div class="card-body text-info">
+            <div class="card mb-3">
+              <div class="card-header text-primary">
+                Installing bootstrap
+              </div>
+              <div class="card-body" [innerHtml]="installingBootstrap">
+              </div>
+            </div>
+          </div>
+          <div class="card-body text-info">
+            <div class="card mb-3">
+              <div class="card-header text-primary">
+                Defining the Route inside app.module.ts
+              </div>
+              <div class="card-body" [innerHtml]="defineRoutes">
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body text-info">
+            <div class="card mb-3">
+              <div class="card-header text-primary">
+                Bootstrap Dropdown with ng-bootstrap
+              </div>
+              <div class="card-body" [innerHtml]="bsDropDownWithNgBootstrap">
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body text-info">
+            <div class="card mb-3">
+              <div class="card-header text-primary">
+                Deploy to Firebase
+              </div>
+              <div class="card-body" [innerHtml]="deployToFirebase">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div *ngIf="active== '2'" class="card border-info">
+        <h4 class="card-header text-success">Authentication & Authorization</h4>
+        <div>
+          <div class="card-body text-info">
+            <div class="card mb-3">
+              <div class="card-header text-primary">
+                Implementing Google Login with Firebase
+              </div>
+              <div class="card-body" [innerHtml]="googleLoginWithFirebase">
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body text-info">
+            <div class="card mb-3">
+              <div class="card-header text-primary">
+                Authentication enhencement work
+              </div>
+              <div class="card-body" [innerHtml]="googleLoginWithFirebase">
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body text-info">
+            <div class="card mb-3">
+              <div class="card-header text-primary">
+                Protecting the Routes
+              </div>
+              <div class="card-body" [innerHtml]="protectingRoutes">
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body text-info">
+            <div class="card mb-3">
+              <div class="card-header text-primary">
+                Redirecting After Logging in
+              </div>
+              <div class="card-body" [innerHtml]="redirectUserAfterLoginning">
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body text-info">
+            <div class="card mb-3">
+              <div class="card-header text-primary">
+                Storing Users In Firebase
+              </div>
+              <div class="card-body" [innerHtml]="storingUsersInFirebase">
+              </div>
+            </div>
+          </div>
+
+
+          
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+      <!-- <div *ngIf="active== '3'" class="card border-info">
+        <h4 class="card-header text-success">Second</h4>
+        <div>Second</div>
+      </div> -->
+      
+
+    </div>
+  </div>
+</div>
