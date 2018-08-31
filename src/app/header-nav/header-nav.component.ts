@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { NavService } from "../services/nav.service";
 import { Subscription } from "rxjs/Subscription";
 import { NgxSpinnerService } from "ngx-spinner";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "header-nav",
@@ -15,7 +16,8 @@ export class HeaderNavComponent implements OnInit, OnDestroy {
 
   constructor(
     private navService: NavService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -32,6 +34,14 @@ export class HeaderNavComponent implements OnInit, OnDestroy {
   // here href we are using as id
   trackNavs(index, nav) {
     return nav ? nav.href : undefined;
+  }
+
+  selectNav(techName) {
+    this.navService.selectNav({blogTech: techName}).subscribe(res => {
+      let data = res.json();
+      this.router.navigateByUrl(data.blogHref);
+      this.spinner.hide();
+    });
   }
 
   ngOnDestroy() {

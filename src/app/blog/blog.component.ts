@@ -7,6 +7,7 @@ import { Title, Meta } from "@angular/platform-browser";
 import { Blog } from "../models/blog";
 import "rxjs/add/operator/map";
 import * as ClipboardJS from "clipboard";
+import * as _ from 'lodash';
 
 @Component({
   selector: "blog",
@@ -21,7 +22,7 @@ export class BlogComponent implements OnInit, OnDestroy {
   keywords;
   desc;
   clipboard;
-
+  activeInputForLeftNav: boolean = false;
 
   constructor(
     private blogService: BlogService,
@@ -49,9 +50,28 @@ export class BlogComponent implements OnInit, OnDestroy {
           this.blogService
             .getLeftNav({ blogTech: this.blogData.blogTech })
             .subscribe(leftNav => {
-              this.leftNav = leftNav.json();
               this.spinner.hide();
-            });
+              this.leftNav = leftNav.json();
+              this.leftNav = _.uniqWith(this.leftNav, _.isEqual);
+          });
+          this.meta.removeTag("name='author'");
+          this.meta.removeTag("name='keywords'");
+          this.meta.removeTag("name='description'");
+          //setting meta params
+          this.meta.addTags([
+            {
+              name: "author",
+              content: "way2programming.com | Arif"
+            },
+            {
+              name: "keywords",
+              content: this.keywords
+            },
+            {
+              name: "description",
+              content: this.desc
+            }
+          ]);
 
           setTimeout(function() {
             var pre = document.getElementsByTagName("pre");
@@ -69,25 +89,23 @@ export class BlogComponent implements OnInit, OnDestroy {
         });
     });
 
-    this.meta.addTags([
-      {
-        name: "author",
-        content: "way2programming.com | Arif"
-      },
-      {
-        name: "keywords",
-        content: this.keywords
-      },
-      {
-        name: "description",
-        content: this.desc
-      }
-    ]);
+
+
+    //check user is admin
+
+    let ald = JSON.parse(localStorage.getItem('ald'));
+    if(ald){
+      this.activeInputForLeftNav = true;
+    }
   }
 
   nextPage(href) {
     this.router.navigateByUrl(href);
     this.activeHref = href;
+  }
+
+  onKeyUpForUpdate(blogHref, sort, blogName) {
+    this.blogService.updateLeftNavWithSortData({blogHref, sort, blogName});
   }
 
   ngOnDestroy() {

@@ -15,6 +15,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.createLoginForm();
+    let ald = JSON.parse(localStorage.getItem('ald'));
+    if(!ald) {
+      this.router.navigateByUrl('/home/admin');
+    }
   }
 
   createLoginForm() {

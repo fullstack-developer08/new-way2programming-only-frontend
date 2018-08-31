@@ -7,7 +7,7 @@
   <div class="collapse navbar-collapse" [class.show]="toggle" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li ngbDropdown *ngFor="let n of navs?.navData" class="nav-item">
-        <a *ngIf="n.childTech === null" [routerLink]="n.nav.href" class="nav-link active">
+        <a *ngIf="n.childTech === null" (click)="selectNav(n.nav.techName)" class="nav-link active">
           {{n.nav.techName}}
         </a>
         <a ngbDropdownToggle *ngIf="n.childTech !== null" class="nav-link dropdown-toggle active" id="navbarDropdown" role="button"
@@ -16,7 +16,7 @@
         </a>
         <div ngbDropdownMenu class="dropdown-menu" id="dropdown-basic" aria-labelledby="navbarDropdown">
           <span *ngFor="let subNav of n.childTech; even as e; odd as o; last as l; trackBy: trackNavs">
-            <a [routerLink]="subNav.href" class="dropdown-item">{{subNav.techName}}</a>
+            <a (click)="selectNav(subNav.techName.replace('5', ''))" class="dropdown-item">{{subNav.techName}}</a>
             <div *ngIf="e && !l" class="dropdown-divider"></div>
             <div *ngIf="o && !l" class="dropdown-divider"></div>
           </span>

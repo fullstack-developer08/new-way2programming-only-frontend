@@ -3,7 +3,7 @@ import { NgModule } from "@angular/core";
 
 import { RouterModule } from "@angular/router";
 import { HttpModule } from "@angular/http";
-import { ReactiveFormsModule } from "@angular/forms";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 
 import { AppComponent } from "./app.component";
 import { HeaderNavComponent } from "./header-nav/header-nav.component";
@@ -45,6 +45,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
     ReactiveFormsModule,
     NgbModule.forRoot(),
     NgxSpinnerModule,
+    FormsModule,
     RouterModule.forRoot([
       { path: "", component: HomeComponent },
       { path: "home/contact", component: ContactComponent },
