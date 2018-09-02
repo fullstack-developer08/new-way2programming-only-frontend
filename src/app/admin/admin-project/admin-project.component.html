@@ -1,0 +1,36 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="list-group">
+        <a (click)="active='add'" class="list-group-item list-group-item-action">
+          Add
+        </a>
+        <a (click)="active='edit'; isProjectFormVisible = false" class="list-group-item list-group-item-action">
+          Edit
+        </a>
+        <a (click)="active='delete'; isProjectFormVisible = false" class="list-group-item list-group-item-action">
+          Delete
+        </a>
+      </div>
+    </div>
+    <div class="col-md">
+      <div >
+        <div *ngIf="active == 'edit' || active == 'delete'">
+          <form [formGroup]="getProjectForm" (ngSubmit)="onGetProjectData()">
+            <input type="text" formControlName="nav_name" class="form-control m-1" placeholder="nav name">
+            <button type="submit">{{active.toUpperCase() === 'EDIT'? 'GET' : 'DELETE'}}</button>
+          </form>
+        </div>
+        <div *ngIf="active == 'add' || isProjectFormVisible">
+            <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+                <input formControlName="project_name" type="text" class="form-control m-1" placeholder="project name">
+                <input formControlName="nav_name" type="text" class="form-control m-1" placeholder="nav name">
+                <input formControlName="nav_sort" type="text" class="form-control m-1" placeholder="nav sort">
+                <textarea formControlName="nav_data" class="form-control m-1" rows="8" placeholder="nav data"></textarea>
+                <button type="submit">{{active.toUpperCase()}}</button>
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

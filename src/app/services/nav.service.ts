@@ -1,31 +1,31 @@
 import { Injectable } from "@angular/core";
 import { Http } from "@angular/http";
 import { NgxSpinnerService } from "ngx-spinner";
-
-
+import { URL, NAVS, GET_HREF } from "../common/const";
+import { Helper } from "../common/helper";
 
 @Injectable()
 export class NavService {
-  NAVS;
-  GET_HREF;
-
-  constructor(private _http: Http, private spinner: NgxSpinnerService) {
-     if(window.location.hostname === 'localhost') {
-      this.NAVS = 'http://way2programming.com/API/navs';
-      this.GET_HREF = 'http://way2programming.com/API/getHref';
-     } else {
-      this.NAVS = '/API/navs';
-      this.GET_HREF = '/API/getHref';
-     }
+  localhost;
+  
+  constructor(
+    private _http: Http,
+    private spinner: NgxSpinnerService,
+    private helper: Helper
+  ) {
+    this.localhost = helper.isHostLocal();
   }
 
   getNavs() {
     this.spinner.show();
-    return this._http.get(this.NAVS);
+    return this._http.get(this.localhost ? NAVS : NAVS.replace(URL, ""));
   }
 
   selectNav(data) {
     this.spinner.show();
-    return this._http.get(this.GET_HREF,{ params: data});
+    return this._http.get(
+      this.localhost ? GET_HREF : GET_HREF.replace(URL, ""),
+      { params: data }
+    );
   }
 }

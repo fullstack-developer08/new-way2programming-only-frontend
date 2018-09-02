@@ -1,44 +1,51 @@
 import { Injectable } from "@angular/core";
 import { Http, Headers } from "@angular/http";
 import { NgxSpinnerService } from "ngx-spinner";
+import { LEFT_NAV, BLOG, UPDATE_SORT, URL } from "../common/const";
+import { Helper } from "../common/helper";
 
 @Injectable()
 export class BlogService {
-  LEFT_NAV;
-  GET_BLOG;
-  UPDATE_SORT;
-  constructor(private _http: Http, private spinner: NgxSpinnerService) {
-    if (window.location.hostname === "localhost") {
-      this.LEFT_NAV = "http://way2programming.com/API/techLinksandName";
-      this.GET_BLOG = "http://way2programming.com/API/blog";
-      this.UPDATE_SORT = "http://way2programming.com/API/updateSort";
-    } else {
-      this.LEFT_NAV = "/API/techLinksandName";
-      this.GET_BLOG = "/API/blog";
-      this.UPDATE_SORT = "/API/updateSort";
-    }
+  localhost;
+
+  constructor(
+    private _http: Http,
+    private spinner: NgxSpinnerService,
+    private helper: Helper
+  ) {
+    this.localhost = helper.isHostLocal();
   }
 
   getBlog(config) {
     this.spinner.show();
-    return this._http.get(this.GET_BLOG, {
-      params: config
-    });
+    return this._http.get(
+      this.localhost ? BLOG : BLOG.replace(URL, ""),
+      {
+        params: config
+      }
+    );
   }
 
   getLeftNav(config) {
     this.spinner.show();
-    return this._http.get(this.LEFT_NAV, {
-      params: config
-    });
+    return this._http.get(
+      this.localhost ? LEFT_NAV : LEFT_NAV.replace(URL, ""),
+      {
+        params: config
+      }
+    );
   }
 
   updateLeftNavWithSortData(data) {
     this.spinner.show();
     return this._http
-      .post(this.UPDATE_SORT, JSON.stringify(data), {
-        headers: new Headers({ "Content-Type": "application/json" })
-      })
+      .post(
+        this.localhost ? UPDATE_SORT : UPDATE_SORT.replace(URL, ""),
+        JSON.stringify(data),
+        {
+          headers: new Headers({ "Content-Type": "application/json" })
+        }
+      )
       .map(res => {
         res.json();
         this.spinner.hide();

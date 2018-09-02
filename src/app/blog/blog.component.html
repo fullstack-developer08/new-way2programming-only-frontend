@@ -1,7 +1,6 @@
-<div *ngIf="blogData" class="card text-white bg-info text-center">
-  <h2 class="card-header">{{blogData.blogTech}}</h2>
+<div *ngIf="blogData" class="card text-white bg-info text-center bor-rad">
+  <h2 class="card-header bor-rad">{{blogData.blogTech}}</h2>
 </div>
-
 <div class="container-fluid pt-3 mt-auto">
   <div class="row">
     <div class="col-sm-3">
@@ -10,13 +9,12 @@
           <a *ngFor="let ln of leftNav" (click)="nextPage(ln.blogHref)" [ngClass]="{'active text-white': activeHref == ln.blogHref}"
             class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" role="tab">{{ln.blogName}}</a>
         </ng-container>
-        <ng-container *ngIf="activeInputForLeftNav" >
-            <span (click)="nextPage(ln.blogHref)"  class="list-group-item list-group-item-action"
-            *ngFor="let ln of leftNav">
-              <input [(ngModel)]="ln.blogName" [value]="ln.blogName" type="text" class="float-left" />
-              <input (keyup.enter)="onKeyUpForUpdate(ln.blogHref, sort.value, ln.blogName)" #sort [value]="ln.sort" *ngIf="activeInputForLeftNav"
-                type="text" size="1" class="float-right" />
-            </span>
+        <ng-container *ngIf="activeInputForLeftNav">
+          <span (click)="nextPage(ln.blogHref)" class="list-group-item list-group-item-action" *ngFor="let ln of leftNav">
+            <input [(ngModel)]="ln.blogName" [value]="ln.blogName" type="text" class="float-left" />
+            <input (keyup.enter)="onKeyUpForUpdate(ln.blogHref, sort.value, ln.blogName)" #sort [value]="ln.sort" *ngIf="activeInputForLeftNav"
+              type="text" size="1" class="float-right" />
+          </span>
         </ng-container>
       </div>
     </div>

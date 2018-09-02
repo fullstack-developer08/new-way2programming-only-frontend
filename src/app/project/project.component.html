@@ -1,0 +1,21 @@
+<div class="card text-white bg-info text-center bor-rad">
+  <h2 class="card-header bor-rad">{{projectName.toUpperCase()}}</h2>
+</div>
+<div class="container-fluid mt-5">
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="list-group sticky-top" id="list-tab" role="tablist">
+        <a *ngFor="let pd1 of projectData; index as i" (click)="projectActiveLink = i" [ngClass]="{'active text-white': projectActiveLink == i}"
+          class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" role="tab">{{pd1.nav_name}}</a>
+      </div>
+    </div>
+    <div class="col-sm-9">
+      <ng-container *ngFor="let pd2 of projectData; index as i">
+        <div class="card border-info" *ngIf="(projectActiveLink == i)">
+          <h4 class="card-header text-success">{{pd2.nav_name}}</h4>
+          <div [innerHTML]="pd2.nav_data"></div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

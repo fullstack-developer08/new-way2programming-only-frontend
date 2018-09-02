@@ -8,7 +8,10 @@ import { Meta, Title } from "@angular/platform-browser";
 })
 export class HomeComponent implements OnInit {
   constructor(private titleService: Title, private meta: Meta) {
-    this.titleService.setTitle('way2programming | learn together')
+    this.titleService.setTitle("way2programming | learn together");
+    this.meta.removeTag("name='author'");
+    this.meta.removeTag("name='keywords'");
+    this.meta.removeTag("name='description'");
     this.meta.addTags([
       {
         name: "author",
@@ -20,7 +23,8 @@ export class HomeComponent implements OnInit {
       },
       {
         name: "description",
-        content: "Essential resources for every Angular developer - way2programming is mainly want to help developers to make code easy and rememberable."
+        content:
+          "Essential resources for every Angular developer - way2programming is mainly want to help developers to make code easy and rememberable."
       }
     ]);
   }

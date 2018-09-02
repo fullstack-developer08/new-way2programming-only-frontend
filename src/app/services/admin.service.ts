@@ -1,35 +1,36 @@
 import { Injectable } from "@angular/core";
 import { Http, Headers } from "@angular/http";
 import "rxjs/add/operator/map";
-import { NgxSpinnerComponent, NgxSpinnerService } from "ngx-spinner";
-
-// 'http://way2programming.com'
+import { NgxSpinnerService } from "ngx-spinner";
+import {
+  BLOG,
+  ADD_PROJECT_DATA,
+  DELETE_PROJECT_NAV_DATA,
+  EDIT_PROJECT_NAV_DATA,
+  GET_PROJECT_DATA,
+  GET_PROJECT_NAV_DATA,
+  URL
+} from "../common/const";
+import { Helper } from "../common/helper";
 
 @Injectable()
 export class AdminService {
-  ADD_BLOG;
-  EDIT_BLOG;
-  GET_BLOG;
-  DELETE_BLOG;
+  localhost: boolean;
+  blog;
 
-  constructor(private _http: Http, private spinner: NgxSpinnerService) {
-    if (window.location.hostname === "localhost") {
-      this.ADD_BLOG = "http://way2programming.com/API/blogs";
-      this.EDIT_BLOG = "http://way2programming.com/API/updateBlog";
-      this.GET_BLOG = "http://way2programming.com/API/blog";
-      this.DELETE_BLOG = "http://way2programming.com/API/deleteBlog";
-    } else {
-      this.ADD_BLOG = "/API/blogs";
-      this.EDIT_BLOG = "/API/updateBlog";
-      this.GET_BLOG = "/API/blog";
-      this.DELETE_BLOG = "/API/deleteBlog";
-    }
+  constructor(
+    private _http: Http,
+    private spinner: NgxSpinnerService,
+    helper: Helper
+  ) {
+    this.localhost = helper.isHostLocal();
+    this.blog = this.localhost ? BLOG : BLOG.replace(URL, "");
   }
 
   addBlog(data) {
     this.spinner.show();
     return this._http
-      .post(this.ADD_BLOG, JSON.stringify(data), {
+      .post(this.blog, JSON.stringify(data), {
         headers: new Headers({ "Content-Type": "application/json" })
       })
       .map(res => {
@@ -42,7 +43,7 @@ export class AdminService {
   editBlog(data) {
     this.spinner.show();
     return this._http
-      .post(this.EDIT_BLOG, JSON.stringify(data), {
+      .put(this.blog, JSON.stringify(data), {
         headers: new Headers({ "Content-Type": "application/json" })
       })
       .map(res => {
@@ -54,15 +55,85 @@ export class AdminService {
 
   getBlog(config) {
     this.spinner.show();
-    return this._http.get(this.GET_BLOG, {
+    return this._http.get(this.blog, {
       params: config
     });
   }
 
   deleteBlog(data) {
     this.spinner.show();
-    return this._http.post(this.DELETE_BLOG, JSON.stringify(data), {
-      headers: new Headers({ "Content-Type": "application/json" })
+    return this._http.delete(this.blog, {
+      params: { blogHref: data.blogHref }
     });
+  }
+
+  addProjectData(data) {
+    this.spinner.show();
+    return this._http
+      .post(
+        this.localhost ? ADD_PROJECT_DATA : ADD_PROJECT_DATA.replace(URL, ""),
+        JSON.stringify(data),
+        {
+          headers: new Headers({ "Content-Type": "application/json" })
+        }
+      )
+      .map(res => {
+        res.json();
+        this.spinner.hide();
+      })
+      .subscribe();
+  }
+
+  getProjectData(projectName) {
+    this.spinner.show();
+    return this._http.get(
+      this.localhost ? GET_PROJECT_DATA : GET_PROJECT_DATA.replace(URL, ""),
+      {
+        params: { project_name: projectName }
+      }
+    );
+  }
+
+  getProjectNavData(navName) {
+    this.spinner.show();
+    return this._http.get(
+      this.localhost
+        ? GET_PROJECT_NAV_DATA
+        : GET_PROJECT_NAV_DATA.replace(URL, ""),
+      {
+        params: { nav_name: navName }
+      }
+    );
+  }
+
+  deleteProjectNavData(navName) {
+    this.spinner.show();
+    return this._http.get(
+      this.localhost
+        ? DELETE_PROJECT_NAV_DATA
+        : DELETE_PROJECT_NAV_DATA.replace(URL, ""),
+      {
+        params: { nav_name: navName }
+      }
+    );
+  }
+
+  editProjectNavData(data) {
+    this.spinner.show();
+    return this._http
+      .post(
+        this.localhost
+          ? EDIT_PROJECT_NAV_DATA
+          : EDIT_PROJECT_NAV_DATA.replace(URL, ""),
+        JSON.stringify(data),
+        {
+          headers: new Headers({ "Content-Type": "application/json" })
+        }
+      )
+      .map(res => {
+        res.json();
+        this.spinner.hide();
+      })
+      .subscribe();
   }
 }

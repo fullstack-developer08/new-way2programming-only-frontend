@@ -17,14 +17,15 @@ import { NavService } from "./services/nav.service";
 import { BlogService } from "./services/blog.service";
 
 import { ContactService } from "./services/contact.service";
-import { ProjectPracticeComponent } from "./project-practice/project-practice.component";
 import { LoginComponent } from "./login/login.component";
 import { AuthGaurd } from "./services/auth-gaurd.service";
-
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AdminService } from "./services/admin.service";
 import { AdminBlogComponent } from "./admin/admin-blog/admin-blog.component";
 import { NgxSpinnerModule } from "ngx-spinner";
+import { AdminProjectComponent } from "./admin/admin-project/admin-project.component";
+import { ProjectComponent } from "./project/project.component";
+import { Helper } from "./common/helper";
 
 @NgModule({
   declarations: [
@@ -35,9 +36,10 @@ import { NgxSpinnerModule } from "ngx-spinner";
     AdminComponent,
     ContactComponent,
     HomeComponent,
-    ProjectPracticeComponent,
     LoginComponent,
-    AdminBlogComponent
+    AdminBlogComponent,
+    AdminProjectComponent,
+    ProjectComponent
   ],
   imports: [
     BrowserModule,
@@ -49,17 +51,25 @@ import { NgxSpinnerModule } from "ngx-spinner";
     RouterModule.forRoot([
       { path: "", component: HomeComponent },
       { path: "home/contact", component: ContactComponent },
-      { path: "project-practice", component: ProjectPracticeComponent },
       {
         path: "home/admin",
         component: AdminComponent,
         canActivate: [AuthGaurd]
       },
       { path: "home/login", component: LoginComponent },
+      { path: "admin/project", component: AdminProjectComponent },
+      { path: "project/:projectName", component: ProjectComponent },
       { path: "**", component: BlogComponent }
     ])
   ],
-  providers: [NavService, BlogService, ContactService, AuthGaurd, AdminService],
+  providers: [
+    NavService,
+    BlogService,
+    ContactService,
+    AuthGaurd,
+    AdminService,
+    Helper
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
