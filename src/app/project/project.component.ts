@@ -26,11 +26,28 @@ export class ProjectComponent implements OnInit {
         res => {
           this.projectData = res.json();
           this.spinner.hide();
+          this.doPreActive();
         },
         err => {
           this.spinner.hide();
         }
       );
     });
+  }
+
+  doPreActive() {
+    setTimeout(function() {
+      var pre = document.getElementsByTagName("pre");
+      for (var i = 0; i < pre.length; i++) {
+        pre[i].className = "rel-pos border border-primary p-3";
+        pre[i].id = "clipboard" + i;
+        var button = document.createElement("button");
+        button.className = "copy-button btn btn-primary";
+        button.textContent = "Copy";
+        var dataFromPreTag = pre[i].innerText;
+        button.setAttribute("data-clipboard-text", dataFromPreTag);
+        pre[i].appendChild(button);
+      }
+    }, 200);
   }
 }

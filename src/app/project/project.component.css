@@ -2,12 +2,10 @@
   cursor: pointer;
   padding: .15rem 0.5rem !important;
 }
-
 .list-group-item.active {
   background-color: #17a2b8 !important;
   border-color: #17a2b8 !important;
 }
-
 .bor-rad {
     border-radius: 0em !important;
 }
